@@ -1,0 +1,49 @@
+<div class="container">
+  <h1>🎵 Music Playlist App</h1>
+
+  <input [(ngModel)]="query" placeholder="Search for a song" />
+  <button (click)="search()">Search</button>
+
+  <h2>Search Results</h2>
+  <ul>
+    @for(song of songs; track $index ){
+      @if(song){
+      <li>
+        {{ song.title }} - {{ song.artist }}
+        <select (change)="addSongToPlaylist(song, $event.target.value)">
+          <option [value]="null" disabled selected>Add to playlist</option>
+          @for(p of playlistService.getPlaylists(); track $index ){
+          <option [value]="p.id">{{ p.name }} </option>
+          }
+        </select>
+      </li>
+      }
+    }@empty{
+    <span>No data</span>
+    }
+  </ul>
+
+  <h2>Create Playlist</h2>
+  <input [(ngModel)]="newPlaylistName" placeholder="Playlist name" />
+  <button (click)="createPlaylist()">Create</button>
+
+  <h2>Your Playlists</h2>
+  @for(p of playlistService.getPlaylists(); track $index ){
+  @if(p){
+  <div>
+    <h3>{{ p.name }}</h3>
+    <ul>
+      @for(s of p.songs; track $index ){
+        <li >
+          {{ s.title }} - {{ s.artist }}
+          <button (click)="removeSongFromPlaylist(s.id, p.id)">Remove</button>
+        </li>
+      }
+    </ul>
+  </div>
+  }
+  } @empty{
+  <span>No data</span>
+  }
+
+</div>

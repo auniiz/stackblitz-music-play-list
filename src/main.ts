@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-
+import {AppComponent} from './app/app.component'
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   template: `
@@ -14,4 +15,6 @@ export class App {
   name = 'Angular';
 }
 
-bootstrapApplication(App);
+bootstrapApplication(AppComponent, {
+  providers: [provideHttpClient(withInterceptorsFromDi())],
+});
