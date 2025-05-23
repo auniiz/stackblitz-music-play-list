@@ -1,0 +1,30 @@
+:host {
+  margin: 0;
+  font-family: Arial, sans-serif;
+
+  .navbar {
+    background-color: #0070f3;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .navbar button {
+    background: white;
+    color: #0070f3;
+    border: none;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  .navbar button:hover {
+    background-color: #f0f0f0;
+  }
+
+ 
+
+}

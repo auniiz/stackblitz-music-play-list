@@ -1,0 +1,33 @@
+<nav class="navbar">
+  <span class="logo">🎵 My Music App</span>
+  <button (click)="createPlaylist()">+ Add Playlist</button>
+</nav>
+<song-list-container></song-list-container>
+
+<div class="container">
+  
+
+  <h2>Create Playlist</h2>
+  <input [(ngModel)]="newPlaylistName" placeholder="Playlist name" />
+  <button (click)="createPlaylist()">Create</button>
+
+  <h2>Your Playlists</h2>
+  @for(p of playlistService.getPlaylists(); track $index ){
+  @if(p){
+  <div>
+    <h3>{{ p.name }}</h3>
+    <ul>
+      @for(s of p.songs; track $index ){
+      <li>
+        {{ s.title }} - {{ s.artist }}
+        <button (click)="removeSongFromPlaylist(s.id, p.id)">Remove</button>
+      </li>
+      }
+    </ul>
+  </div>
+  }
+  } @empty{
+  <span>No data</span>
+  }
+
+</div>

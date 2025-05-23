@@ -1,0 +1,51 @@
+:host {
+    .playlist-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1rem;
+
+        .new-playlist-btn {
+            margin-bottom: 1rem;
+            padding: 0.4rem 0.75rem;
+            border: none;
+            background-color: #007acc;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #005fa3;
+            }
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f7f7f7;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+
+            &.active {
+                background: #d1eaff;
+                font-weight: bold;
+            }
+
+            span {
+                flex: 1;
+                cursor: pointer;
+            }
+
+            button {
+                margin-left: 0.5rem;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                font-size: 1rem;
+            }
+        }
+    }
+
+
+}

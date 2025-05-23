@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="search-bar">
+        <input [(ngModel)]="query" type="text" placeholder="Search for a song..." />
+        <button (click)="search()">Search</button>
+    </div>
+
+    @if (songs.length === 0) {
+    <p class="no-results">No results yet. Try searching above.</p>
+    }
+
+    @if (songs.length > 0) {
+    <table class="song-table">
+        <thead>
+            <tr>
+                <th>Track</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Preview</th>
+                <th>Add</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (song of songs ; track $index) {
+            <tr>
+                <td>{{ song.trackName }}</td>
+                <td>{{ song.artistName }}</td>
+                <td>{{ song.collectionName }}</td>
+                <td>
+                    @if (song.previewUrl) {
+                    <audio [src]="song.previewUrl" controls></audio>
+                    }
+                </td>
+                <td>
+                    <button (click)="addToPlaylist(song)">➕</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>

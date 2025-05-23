@@ -1,45 +1,99 @@
-import { Component, OnInit } from '@angular/core';
-import { SongService } from './services/song.service';
-import { PlaylistService } from './services/playlist.service';
-import { Song } from './models/song.model';
-import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SongListComponent } from './components';
+
+interface ITunesTrack {
+  trackId: number;
+  trackName: string;
+  artistName: string;
+  collectionName: string;
+  previewUrl: string;
+  artworkUrl100: string;
+}
+
+interface ITunesResponse {
+  resultCount: number;
+  results: ITunesTrack[];
+}
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  imports: [CommonModule, FormsModule],
   standalone: true,
+  imports: [CommonModule, FormsModule, SongListComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit{
-  songs: Song[] = [];
+export class AppComponent {
   query = '';
-  newPlaylistName = '';
+  tracks: ITunesTrack[] = [];
+  playlists: { [name: string]: ITunesTrack[] } = {};
+  selectedPlaylist = '';
 
-  constructor(
-    public songService: SongService,
-    public playlistService: PlaylistService
-  ) {}
-
-  ngOnInit(): void {
-    this.songs= this.songService.getSongs()
-  }
-  search(): void {
-    this.songs = this.songService.searchSongs(this.query);
+  get playlistNames(): string[] {
+    return Object.keys(this.playlists);
   }
 
-  createPlaylist(): void {
-    if (this.newPlaylistName.trim()) {
-      this.playlistService.createPlaylist(this.newPlaylistName);
-      this.newPlaylistName = '';
+  get currentPlaylist(): ITunesTrack[] {
+    return this.playlists[this.selectedPlaylist] || [];
+  }
+  constructor(private http: HttpClient) { }
+
+  search() {
+    const url = `https://itunes.apple.com/search?term=${encodeURIComponent(this.query)}&entity=song`;
+    this.http.get<ITunesResponse>(url).subscribe(res => {
+      this.tracks = res.results;
+    });
+  }
+
+  createPlaylist() {
+    const name = prompt('Enter playlist name:');
+    if (name && !this.playlists[name]) {
+      this.playlists[name] = [];
+      this.selectedPlaylist = name;
     }
   }
 
-  addSongToPlaylist(song: Song, playlistId: number): void {
-    this.playlistService.addSongToPlaylist(song, playlistId);
+
+  selectPlaylist(name: string) {
+    this.selectedPlaylist = name;
   }
 
-  removeSongFromPlaylist(songId: number, playlistId: number): void {
-    this.playlistService.removeSongFromPlaylist(songId, playlistId);
+  addToPlaylist(track: ITunesTrack) {
+    const playlist = this.playlists[this.selectedPlaylist];
+    if (!playlist.find(t => t.trackId === track.trackId)) {
+      playlist.push(track);
+    }
   }
+
+  removeFromPlaylist(track: ITunesTrack) {
+    this.playlists[this.selectedPlaylist] = this.playlists[this.selectedPlaylist].filter(
+      t => t.trackId !== track.trackId
+    );
+  }
+
+
+
+  renamePlaylist(oldName: string) {
+    const newName = prompt('Rename playlist:', oldName);
+    if (newName && newName !== oldName && !this.playlists[newName]) {
+      this.playlists[newName] = this.playlists[oldName];
+      delete this.playlists[oldName];
+      if (this.selectedPlaylist === oldName) {
+        this.selectedPlaylist = newName;
+      }
+    }
+  }
+
+  deletePlaylist(name: string) {
+    const confirmed = confirm(`Delete playlist "${name}"?`);
+    if (confirmed) {
+      delete this.playlists[name];
+      if (this.selectedPlaylist === name) {
+        this.selectedPlaylist = '';
+      }
+    }
+  }
+
 }
