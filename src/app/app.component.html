@@ -12,10 +12,17 @@
          />
          <button (click)="searchMusic()">Search</button>
       </div>
-      @if(selectedPlaylist){
+      @if(selectedPlaylist && search === ''){
       <playlist-detail [selectedPlaylist]="selectedPlaylist"></playlist-detail>
       }@else {
-      <music-list [musics]="musics"></music-list>
+      <music-list
+         [musics]="musics"
+         [componentOptions]="{
+            useAddButton: true,
+            useRemoveButton: false
+         }"
+         (addMusic)="addToPlaylist($event)"
+      ></music-list>
       }
    </div>
 </div>

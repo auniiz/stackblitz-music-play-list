@@ -1,15 +1,12 @@
 <div class="container">
-   @if (musics.length === 0) {
-   <p class="no-results">No results yet. Try searching above.</p>
-   } @if (musics.length > 0) {
    <table class="song-table">
       <thead>
          <tr>
-            <th>Track</th>
+            <th>Name</th>
             <th>Artist</th>
             <th>Album</th>
             <th>Preview</th>
-            <th>Add</th>
+            <th>Actions</th>
          </tr>
       </thead>
       <tbody>
@@ -24,11 +21,16 @@
                }
             </td>
             <td>
+               @if(componentOptions.useAddButton){
                <button (click)="addToPlaylist(music)">➕</button>
+               } @if (componentOptions.useRemoveButton) {
+               <button (click)="removeFromPlaylist(music)">Remove</button>
+               }
             </td>
          </tr>
+         }@empty {
+         <p class="no-results">No results yet. Try searching above.</p>
          }
       </tbody>
    </table>
-   }
 </div>

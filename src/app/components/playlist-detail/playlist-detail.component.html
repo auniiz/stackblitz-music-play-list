@@ -1,2 +1,13 @@
-<div class="playlist container"></div>
-<div class="music container"></div>
+<div class="playlist container">
+   <span>Playlist: {{ selectedPlaylist }}</span>
+</div>
+<div class="music container">
+   <music-list
+      [musics]="playlistMusicList"
+      [componentOptions]="{
+         useAddButton: false,
+         useRemoveButton: true
+      }"
+      (removeMusic)="removeFromPlaylist($event)"
+   ></music-list>
+</div>

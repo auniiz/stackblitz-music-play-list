@@ -28,25 +28,20 @@ export class PlaylistService {
     }
   }
 
-  addToPlaylist(playlistName: string, track: ITunesTrack) {
+  addMusicToPlaylist(playlistName: string, music: ITunesTrack) {
     if (playlistName) {
       const playlist = this.playlists[playlistName];
-      if (!playlist.find(t => t.trackId === track.trackId)) {
-        playlist.push(track);
+      if (!playlist.find(t => t.trackId === music.trackId)) {
+        playlist.push(music);
       }
     }
   }
-  removeMusicFromPlaylist(track: ITunesTrack) {
-    // this.playlists[this.selectedPlaylist] = this.playlists[this.selectedPlaylist].filter(
-    //   t => t.trackId !== track.trackId
-    // );
+  removeMusicFromPlaylist(playlistName: string, music: ITunesTrack) {
+    this.playlists[playlistName] = this.playlists[playlistName].filter(
+      t => t.trackId !== music.trackId
+    );
   }
-  removeSongFromPlaylist(songId: number, playlistId: number): void {
-    // const playlist = this.playlists.find(p => p.id === playlistId);
-    // if (playlist) {
-    //   playlist.songs = playlist.songs.filter(s => s.id !== songId);
-    // }
-  }
+
 
 
 }

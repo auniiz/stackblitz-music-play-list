@@ -6,6 +6,7 @@ import { MusicListComponent, PlaylistComponent, PlaylistDetailComponent } from '
 import { ITunesSearchResponse, ITunesTrack } from './models/song.model';
 import { } from "./components/playlist-list/playlist.component";
 import { MusicService } from './services/music.service';
+import { PlaylistService } from './services/playlist.service';
 
 
 
@@ -23,16 +24,20 @@ export class AppComponent implements OnInit {
   selectedPlaylist = '';
 
 
-  constructor(private musicService: MusicService) { }
+  constructor(private musicService: MusicService, private playlistService: PlaylistService) { }
   ngOnInit(): void {
     this.searchMusic();
   }
 
   searchMusic(): void {
+    this.selectedPlaylist = ''
     this.musicService.searchOnlineSongs(this.search).subscribe((res) => {
       this.musics = res.results
     })
   }
-
+  addToPlaylist(music: ITunesTrack) {
+    if (this.selectedPlaylist)
+      this.playlistService.addMusicToPlaylist(this.selectedPlaylist, music);
+  }
 
 }

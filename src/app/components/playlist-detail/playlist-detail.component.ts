@@ -4,18 +4,19 @@ import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ITunesTrack } from "../../models/song.model";
 import { MusicService } from "../../services/music.service";
 import { PlaylistService } from "../../services/playlist.service";
+import { MusicListComponent } from "../music-list/music-list.component";
 
 @Component({
   selector: 'playlist-detail',
   templateUrl: './playlist-detail.component.html',
   styleUrl: './playlist-detail.component.scss',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MusicListComponent,],
   standalone: true,
 })
 export class PlaylistDetailComponent implements OnInit {
   @Input() selectedPlaylist = ''
 
-  constructor(private songService: MusicService, public playlistService: PlaylistService) { }
+  constructor(private playlistService: PlaylistService) { }
   ngOnInit(): void {
   }
 
@@ -28,6 +29,10 @@ export class PlaylistDetailComponent implements OnInit {
 
   }
 
+  removeFromPlaylist(music: ITunesTrack) {
+    if (this.selectedPlaylist)
+      this.playlistService.removeMusicFromPlaylist(this.selectedPlaylist, music);
+  }
 
 
 }
