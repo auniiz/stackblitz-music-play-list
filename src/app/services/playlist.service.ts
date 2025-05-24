@@ -1,32 +1,52 @@
 import { Injectable } from '@angular/core';
 import { Playlist } from '../models/playlist.model';
-import { Song } from '../models/song.model';
+import { ITunesTrack, } from '../models/song.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlaylistService {
-  private playlists: Playlist[] = [];
+  playlists: { [name: string]: ITunesTrack[] } = {};
 
-  getPlaylists(): Playlist[] {
-    return this.playlists;
+  createPlaylist() {
+    const name = prompt('Enter playlist name:');
+    if (name && !this.playlists[name]) {
+      this.playlists[name] = [];
+    }
   }
-
-  createPlaylist(name: string): void {
-    this.playlists.push({ id: Date.now(), name, songs: [] });
+  renamePlaylist(oldName: string) {
+    const newName = prompt('Rename playlist:', oldName);
+    if (newName && newName !== oldName && !this.playlists[newName]) {
+      this.playlists[newName] = this.playlists[oldName];
+      delete this.playlists[oldName];
+    }
   }
-
-  addSongToPlaylist(song: Song, playlistId: number): void {
-    const playlist = this.playlists.find(p => p.id === playlistId);
-    if (playlist && !playlist.songs.find(s => s.id === song.id)) {
-      playlist.songs.push(song);
+  deletePlaylist(name: string) {
+    const confirmed = confirm(`Delete playlist "${name}"?`);
+    if (confirmed) {
+      delete this.playlists[name];
     }
   }
 
+  addToPlaylist(playlistName: string, track: ITunesTrack) {
+    if (playlistName) {
+      const playlist = this.playlists[playlistName];
+      if (!playlist.find(t => t.trackId === track.trackId)) {
+        playlist.push(track);
+      }
+    }
+  }
+  removeMusicFromPlaylist(track: ITunesTrack) {
+    // this.playlists[this.selectedPlaylist] = this.playlists[this.selectedPlaylist].filter(
+    //   t => t.trackId !== track.trackId
+    // );
+  }
   removeSongFromPlaylist(songId: number, playlistId: number): void {
-    const playlist = this.playlists.find(p => p.id === playlistId);
-    if (playlist) {
-      playlist.songs = playlist.songs.filter(s => s.id !== songId);
-    }
+    // const playlist = this.playlists.find(p => p.id === playlistId);
+    // if (playlist) {
+    //   playlist.songs = playlist.songs.filter(s => s.id !== songId);
+    // }
   }
+
+
 }

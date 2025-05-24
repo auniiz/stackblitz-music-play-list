@@ -1,0 +1,10 @@
+<button (click)="newPlaylist()">+ New Playlist</button>
+<ul class="playlist-list">
+   @for (name of playlistNames ;track $index) {
+   <li [class.active]="name === selectedPlaylist">
+      <span (click)="selectPlaylist(name)">{{ name }}</span>
+   </li>
+   }@empty {
+   <div>No Playlist</div>
+   }
+</ul>

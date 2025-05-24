@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { ITunesTrack } from "../../models/song.model";
-import { SongService } from "../../services/music.service";
+import { MusicService } from "../../services/music.service";
 import { PlaylistService } from "../../services/playlist.service";
 
 @Component({
@@ -13,30 +13,22 @@ import { PlaylistService } from "../../services/playlist.service";
   standalone: true,
 })
 export class MusicListComponent implements OnInit {
-  @Output() addSong = new EventEmitter<ITunesTrack>
-  songs: ITunesTrack[] = [];
-  query: string = '';
+  @Output() addMusic = new EventEmitter<ITunesTrack>
+  @Input() musics: ITunesTrack[] = [];
 
-  constructor(private songService: SongService, public playlistService: PlaylistService) { }
+  constructor(private songService: MusicService, public playlistService: PlaylistService) { }
   ngOnInit(): void {
   }
 
-  search(): void {
-    this.songService.searchOnlineSongs(this.query).subscribe((res) => {
-      this.songs = res.results
-      console.log(res)
-    })
-  }
-  addToPlaylist(track: ITunesTrack) {
-    this.addSong.emit(track)
-    if (!this.playlistService.getPlaylists().find(t => t.id === track.trackId)) {
-      //   this.playlistService.getPlaylists().push(track);
-      alert(`Added "${track.trackName}" to playlist.`);
-    }
+
+  addToPlaylist(music: ITunesTrack) {
+    this.addMusic.emit(music)
+    // if (!this.playlistService.getPlaylists().find(t => t.id === track.trackId)) {
+    //   //   this.playlistService.getPlaylists().push(track);
+    //   alert(`Added "${track.trackName}" to playlist.`);
+    // }
   }
 
-  createPlaylist() {
-    alert('📝 Playlist creation feature coming soon!');
-  }
+
 
 }

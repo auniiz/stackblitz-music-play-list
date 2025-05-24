@@ -1,32 +1,21 @@
-<div class="playlist">
-  <h2>🎶 Playlists</h2>
-  <button class="new-playlist-btn" (click)="createPlaylist()">➕ New Playlist</button>
-
-  <!-- Playlist List -->
-  <ul class="playlist-list">
-    @for (name of playlistNames ;track $index) {
-      <li [class.active]="name === selectedPlaylist">
-        <span (click)="selectPlaylist(name)">{{ name }}</span>
-        <button title="Rename" (click)="renamePlaylist(name)">✏️</button>
-        <button title="Delete" (click)="deletePlaylist(name)">🗑️</button>
-      </li>
-    }
-  </ul>
-
-  <!-- Playlist Content -->
-  @if (selectedPlaylist && currentPlaylist.length > 0) {
-    <ul class="song-list">
-      @for (song of currentPlaylist ;track $index) {
-        <li>
-          {{ song.trackName }} - {{ song.artistName }}
-          <button (click)="removeFromPlaylist(song)">❌</button>
-        </li>
+<div class="sidebar container">
+   <playlist-list [(selectedPlaylist)]="selectedPlaylist"></playlist-list>
+</div>
+<div class="content container">
+   <div class="serach-bar"></div>
+   <div class="content-wrapper">
+      <div class="search-bar">
+         <input
+            [(ngModel)]="search"
+            type="text"
+            placeholder="Search for a song..."
+         />
+         <button (click)="searchMusic()">Search</button>
+      </div>
+      @if(selectedPlaylist){
+      <playlist-detail [selectedPlaylist]="selectedPlaylist"></playlist-detail>
+      }@else {
+      <music-list [musics]="musics"></music-list>
       }
-    </ul>
-  } @else if (selectedPlaylist) {
-    <p>No songs in playlist.</p>
-    <song-list-container (addSong)="addToPlaylist($event)" ></song-list-container>
-  } @else {
-    <p>Please select a playlist.</p>
-  }
+   </div>
 </div>

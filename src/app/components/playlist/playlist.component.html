@@ -1,9 +1,0 @@
-<ul class="playlist-list">
-    @for (name of playlistNames ;track $index) {
-    <li [class.active]="name === selectedPlaylist">
-        <span (click)="selectPlaylist(name)">{{ name }}</span>
-        <button title="Rename" (click)="renamePlaylist(name)">✏️</button>
-        <button title="Delete" (click)="deletePlaylist(name)">🗑️</button>
-    </li>
-    }
-</ul>
