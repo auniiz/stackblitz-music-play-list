@@ -15,15 +15,14 @@ import { PlaylistService } from "../../services/playlist.service";
 export class PlaylistComponent implements OnInit {
   @Input() selectedPlaylist = ''
   @Output() selectedPlaylistChange = new EventEmitter<string>()
-
+  get playlistNames(): string[] {
+    return this.playlistService.playlistNames
+  }
 
   constructor(private playlistService: PlaylistService) { }
   ngOnInit(): void {
   }
 
-  get playlistNames(): string[] {
-    return Object.keys(this.playlistService.playlists) || [];
-  }
 
   selectPlaylist(playlistName: string) {
     this.selectedPlaylist = playlistName;
@@ -32,5 +31,11 @@ export class PlaylistComponent implements OnInit {
 
   newPlaylist() {
     this.playlistService.createPlaylist()
+  }
+  renamePlaylist(oldName: string) {
+    this.playlistService.renamePlaylist(oldName)
+  }
+  deletePlaylist(oldName: string) {
+    this.playlistService.deletePlaylist(oldName)
   }
 }

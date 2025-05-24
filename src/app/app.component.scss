@@ -2,12 +2,15 @@
    display: inline-flex;
    height: 100%;
    width: 100%;
+   contain: strict;
 
    .container {
       display: flex;
       flex-flow: column;
       height: 100%;
       padding: 20px;
+      overflow: scroll;
+      contain: strict;
 
       &.sidebar {
          width: 30%;

@@ -7,10 +7,13 @@ import { ITunesTrack, } from '../models/song.model';
 })
 export class PlaylistService {
   playlists: { [name: string]: ITunesTrack[] } = {};
+  get playlistNames(): string[] {
+    return Object.keys(this.playlists) || [];
+  }
 
   createPlaylist() {
     const name = prompt('Enter playlist name:');
-    if (name && !this.playlists[name]) {
+    if (name && !this.playlistNames.includes(name)) {
       this.playlists[name] = [];
     }
   }
