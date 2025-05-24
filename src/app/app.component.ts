@@ -31,6 +31,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.searchMusic();
   }
+  onSelectPlaylist() {
+    this.search = ''
+  }
 
   searchMusic(isFromClick = false): void {
     const timeOut = isFromClick ? 0 : 300;

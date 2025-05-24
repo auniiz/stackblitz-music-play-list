@@ -1,5 +1,8 @@
 <div class="sidebar container">
-   <playlist-list [(selectedPlaylist)]="selectedPlaylist"></playlist-list>
+   <playlist-list
+      [(selectedPlaylist)]="selectedPlaylist"
+      (selectedPlaylistChange)="onSelectPlaylist()"
+   ></playlist-list>
 </div>
 <div class="content container">
    <div class="serach-bar"></div>
