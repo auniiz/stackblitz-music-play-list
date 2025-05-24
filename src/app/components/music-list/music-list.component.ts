@@ -16,6 +16,7 @@ export interface IMusicListComponentOptions {
   standalone: true,
 })
 export class MusicListComponent implements OnInit {
+  @Input() IDListSelected: number[] = []
   @Input() componentOptions: IMusicListComponentOptions = {
     useAddButton: false,
     useRemoveButton: false

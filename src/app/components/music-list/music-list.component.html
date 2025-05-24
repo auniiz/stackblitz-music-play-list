@@ -21,9 +21,11 @@
                }
             </td>
             <td>
-               @if(componentOptions.useAddButton){
+               @if(componentOptions.useAddButton &&
+               !IDListSelected.includes(music.trackId)){
                <button (click)="addToPlaylist(music)">➕</button>
-               } @if (componentOptions.useRemoveButton) {
+               } @if (componentOptions.useRemoveButton &&
+               IDListSelected.includes(music.trackId)) {
                <button (click)="removeFromPlaylist(music)">Remove</button>
                }
             </td>

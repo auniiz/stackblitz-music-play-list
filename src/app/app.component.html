@@ -9,13 +9,19 @@
             [(ngModel)]="search"
             type="text"
             placeholder="Search for a song..."
+            (ngModelChange)="searchMusic()"
          />
-         <button (click)="searchMusic()">Search</button>
+         <button (click)="searchMusic(true)">Search</button>
+         @if(search){
+
+         <button (click)="search = ''">Back</button>
+         }
       </div>
       @if(selectedPlaylist && search === ''){
       <playlist-detail [selectedPlaylist]="selectedPlaylist"></playlist-detail>
       }@else {
       <music-list
+         [IDListSelected]="musicIDList"
          [musics]="musics"
          [componentOptions]="{
             useAddButton: true,

@@ -26,7 +26,10 @@ export class PlaylistDetailComponent implements OnInit {
 
   get playlistMusicList() {
     return this.playlistService.playlists[this.selectedPlaylist] || []
+  }
 
+  get musicIDList() {
+    return this.playlistMusicList.map(music => music.trackId) || []
   }
 
   removeFromPlaylist(music: ITunesTrack) {
