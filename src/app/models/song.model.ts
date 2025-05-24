@@ -1,8 +1,4 @@
-export interface Song {
-  id: number;
-  title: string;
-  artist: string;
-}
+
 export interface ITunesTrack {
   trackId: number;
   trackName: string;

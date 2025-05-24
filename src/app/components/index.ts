@@ -1,1 +1,1 @@
-export * from './song-list/song-list.component'
+export * from './music-list/music-list.component'

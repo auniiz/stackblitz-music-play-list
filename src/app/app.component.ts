@@ -2,26 +2,15 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SongListComponent } from './components';
+import { MusicListComponent } from './components';
+import { ITunesTrack } from './models/song.model';
 
-interface ITunesTrack {
-  trackId: number;
-  trackName: string;
-  artistName: string;
-  collectionName: string;
-  previewUrl: string;
-  artworkUrl100: string;
-}
 
-interface ITunesResponse {
-  resultCount: number;
-  results: ITunesTrack[];
-}
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, SongListComponent],
+  imports: [CommonModule, FormsModule, MusicListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
