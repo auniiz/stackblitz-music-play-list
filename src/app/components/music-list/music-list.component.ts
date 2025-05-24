@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ITunesTrack } from "../../models/song.model";
-import { SongService } from "../../services/song.service";
+import { SongService } from "../../services/music.service";
 import { PlaylistService } from "../../services/playlist.service";
 
 @Component({

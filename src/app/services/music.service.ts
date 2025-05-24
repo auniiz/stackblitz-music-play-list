@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ITunesSearchResponse, Song, } from '../models/song.model';
+import { ITunesSearchResponse, } from '../models/song.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import axios, { isAxiosError } from 'axios'
